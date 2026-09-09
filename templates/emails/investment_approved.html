@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #28a745;">Investment Approved!</h2>
+        <p>Hello {{ user.username }},</p>
+        <p>Great news! Your investment in the <strong>{{ plan.name }}</strong> plan has been verified and approved by our admin team.</p>
+        <ul style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+            <li><strong>Amount:</strong> ${{ amount }}</li>
+            <li><strong>Expected Return:</strong> ${{ plan.min_return }}% - {{ plan.max_return }}%</li>
+            <li><strong>Duration:</strong> {{ plan.duration_days }} Days</li>
+        </ul>
+        <p>Your profits are now actively growing. You can track your investment in your dashboard.</p>
+    </div>
+</body>
+</html>

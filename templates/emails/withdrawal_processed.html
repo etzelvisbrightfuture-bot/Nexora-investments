@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: {% if status == 'approved' %}#28a745{% else %}#dc3545{% endif %};">Withdrawal {{ status|title }}</h2>
+        <p>Hello {{ user.username }},</p>
+        <p>Your withdrawal request of <strong>${{ amount }}</strong> has been <strong>{{ status }}</strong> by our finance team.</p>
+        {% if status == 'approved' %}
+            <p>The funds have been sent to your provided wallet address. Please allow 24-48 hours for the transaction to reflect on your end.</p>
+        {% else %}
+            <p>If you believe this is an error or need to update your wallet details, please submit a new request or contact support.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

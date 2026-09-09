@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+        <h2 style="color: #f59e0b;">Investment Received & Pending Verification</h2>
+        <p>Hello {{ user.username }},</p>
+        <p>Thank you! We have successfully received your investment request and payment proof.</p>
+        
+        <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px;">
+            <p style="margin: 0;"><strong>Plan:</strong> {{ plan.name }}</p>
+            <p style="margin: 5px 0 0 0;"><strong>Amount:</strong> ${{ amount }}</p>
+            <p style="margin: 5px 0 0 0;"><strong>Status:</strong> Pending Admin Review</p>
+        </div>
+
+        <p>Our finance team is currently verifying your transaction. This process typically takes <strong>1 to 24 hours</strong>. You will receive another email as soon as your investment is approved and activated.</p>
+        
+        <p style="margin-top: 30px;">
+            <a href="http://127.0.0.1:8000/accounts/dashboard/" style="background: #f59e0b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Dashboard</a>
+        </p>
+        
+        <p style="margin-top: 30px; font-size: 0.9em; color: #888;">If you did not make this investment, please contact our support team immediately.</p>
+    </div>
+</body>
+</html>

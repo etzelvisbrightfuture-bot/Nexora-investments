@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Complete Investment - {{ plan.name }}{% endblock %}
+
+{% block content %}
+<section class="orion-hero" style="height: 200px;">
+    <div class="container">
+        <h1 class="hero-title" style="font-size: 2.5rem;">Complete Your Investment</h1>
+    </div>
+</section>
+
+<section class="plans-section">
+    <div class="container">
+        <div class="payment-container">
+            
+            <!-- LEFT SIDE: Plan Info & Payment Methods -->
+            <div class="payment-info">
+                <h2>{{ plan.name }}</h2>
+                <p class="plan-category">{{ plan.get_category_display }}</p>
+                
+                <div class="plan-summary-box">
+                    <div class="summary-row"><span>Projected Return:</span><strong>{{ plan.min_return }}% – {{ plan.max_return }}%</strong></div>
+                    <div class="summary-row"><span>Duration:</span><strong>{{ plan.duration_days }} Days</strong></div>
+                    <div class="summary-row"><span>Allowed Range:</span><strong>${{ plan.minimum_amount|floatformat:2 }} – ${{ plan.maximum_amount|floatformat:2 }}</strong></div>
+                </div>
+
+                <h3 style="margin-top: 20px;">Select Payment Method</h3>
+                <div class="method-tabs">
+                    <button type="button" class="method-tab active" onclick="selectMethod('solana', this)">
+                        <img src="https://cryptologos.cc/logos/solana-sol-logo.png?v=029" alt="SOL"> Solana
+                    </button>
+                    <button type="button" class="method-tab" onclick="selectMethod('bitcoin', this)">
+                        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=029" alt="BTC"> Bitcoin
+                    </button>
+                    <button type="button" class="method-tab" onclick="selectMethod('ethereum', this)">
+                        <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=029" alt="ETH"> Ethereum
+                    </button>
+                    <button type="button" class="method-tab" onclick="selectMethod('giftcard', this)">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2953/2953363.png" alt="Gift"> Gift Card
+                    </button>
+                </div>
+
+                <!-- CRYPTO ADDRESS DISPLAY SECTION -->
+                <div id="crypto-section" class="payment-method-section" style="margin-top: 20px;">
+                    <p style="color: #555; font-size: 0.95rem;">Send the exact USD equivalent to the <strong id="crypto-name">Solana</strong> address below:</p>
+                    
+                    <div class="wallet-address-container">
+                        <input type="text" value="{{ wallets.solana }}" readonly id="walletAddress">
+                        <button type="button" onclick="copyAddress()" class="copy-btn">Copy</button>
+                    </div>
+                    <p id="copyMsg" style="color: #28a745; font-size: 0.85rem; display: none; margin-top: 5px;">✓ Address copied to clipboard!</p>
+                </div>
+
+                <!-- GIFT CARD INSTRUCTIONS SECTION -->
+                <div id="giftcard-section" class="payment-method-section" style="display: none; margin-top: 20px;">
+                    <div class="solana-box" style="background: #fff3cd; border-color: #ffeeba;">
+                        <h3 style="color: #856404;"><i class="fas fa-gift"></i> Gift Card Instructions</h3>
+                        <p style="color: #856404; margin-bottom: 0;">Purchase a gift card (Amazon, Apple, Steam, etc.). Upload a clear, high-quality photo of the front and the back (with the PIN scratched off) in the form on the right.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: Submission Form -->
+            <div class="payment-form-card">
+                <h3>Submit Proof of Payment</h3>
+                <p style="color: #666; margin-bottom: 20px; font-size: 0.95rem;">Fill out the details below to activate your investment.</p>
+                
+                <form method="POST" enctype="multipart/form-data" class="auth-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="payment_method" id="selectedMethod" value="solana">
+                    
+                    <div class="form-group">
+                        <label for="amount">Investment Amount (USD)</label>
+                        <input type="number" name="amount" id="amount" required placeholder="e.g. 1000" min="{{ plan.minimum_amount }}" max="{{ plan.maximum_amount }}" step="0.01">
+                    </div>
+
+                    <!-- Screenshot Upload (Always Visible) -->
+                    <div class="form-group">
+                        <label for="payment_proof">Upload Payment Screenshot</label>
+                        <input type="file" name="payment_proof" id="payment_proof" accept="image/*" required>
+                        <small style="color: #888;">Upload a clear screenshot of your crypto transfer or gift card.</small>
+                    </div>
+                    
+                    <button type="submit" class="btn-orion" style="width: 100%; border: none; cursor: pointer; margin-top: 15px;">Submit Investment</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    const wallets = {
+        'solana': "{{ wallets.solana }}",
+        'bitcoin': "{{ wallets.bitcoin }}",
+        'ethereum': "{{ wallets.ethereum }}"
+    };
+
+    const cryptoNames = {
+        'solana': 'Solana (SOL)',
+        'bitcoin': 'Bitcoin (BTC)',
+        'ethereum': 'Ethereum (ETH)'
+    };
+
+    function selectMethod(method, btn) {
+        // 1. Update active tab styling
+        document.querySelectorAll('.method-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // 2. Set the hidden form input
+        document.getElementById('selectedMethod').value = method;
+
+        // 3. Toggle sections based on method
+        if (method === 'giftcard') {
+            document.getElementById('crypto-section').style.display = 'none';
+            document.getElementById('giftcard-section').style.display = 'block';
+        } else {
+            document.getElementById('crypto-section').style.display = 'block';
+            document.getElementById('giftcard-section').style.display = 'none';
+            
+            // Update the address and name dynamically
+            document.getElementById('walletAddress').value = wallets[method];
+            document.getElementById('crypto-name').innerText = cryptoNames[method];
+        }
+    }
+
+    function copyAddress() {
+        var copyText = document.getElementById("walletAddress");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); 
+        navigator.clipboard.writeText(copyText.value);
+        
+        var msg = document.getElementById("copyMsg");
+        msg.style.display = "block";
+        setTimeout(function(){ msg.style.display = "none"; }, 2500);
+    }
+</script>
+{% endblock %}

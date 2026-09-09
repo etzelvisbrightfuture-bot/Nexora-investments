@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - Nexora Investments{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Create Your Account</h2>
+        <p>Start your investment journey with Nexora today.</p>
+        
+                <form method="POST" class="auth-form">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_email">Email Address</label>
+                {{ form.email }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password1">Password</label>
+                {{ form.password1 }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password2">Confirm Password</label>
+                {{ form.password2 }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        </form>
+        
+        <p class="auth-footer">
+            Already have an account? <a href="{% url 'login' %}">Log in here</a>.
+        </p>
+    </div>
+</div>
+{% endblock %}

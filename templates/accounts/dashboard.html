@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Nexora Investments{% endblock %}
+
+{% block content %}
+<section class="orion-hero" style="height: 150px;">
+    <div class="container">
+        <h1 class="hero-title" style="font-size: 2.5rem;">My Dashboard</h1>
+    </div>
+</section>
+
+<section class="plans-section">
+    <div class="container">
+        
+        <!-- Welcome Message -->
+        <div style="margin-bottom: 30px;">
+            <h2>Welcome back, {{ user.username }}!</h2>
+            <p style="color: #666;">Here is an overview of your investment portfolio.</p>
+        </div>
+
+                <!-- Statistics Cards -->
+        <div class="dashboard-stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #e3f2fd; color: #1976d2;"><i class="fas fa-wallet"></i></div>
+                <div class="stat-info">
+                    <h3>Total Invested</h3>
+                    <p>${{ total_invested|floatformat:2 }}</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #e8f5e9; color: #388e3c;"><i class="fas fa-hand-holding-usd"></i></div>
+                <div class="stat-info">
+                    <h3>Withdrawable Balance</h3>
+                    <p>${{ withdrawable_balance|floatformat:2 }}</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #fff3e0; color: #f57c00;"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3>Active Plans</h3>
+                    <p>{{ active_count }}</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #fce4ec; color: #c2185b;"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <h3>Pending Verification</h3>
+                    <p>{{ pending_count }}</p>
+                </div>
+            </div>
+        </div>
+                <!-- Referral Program Card -->
+        <div class="referral-card">
+            <div class="referral-header">
+                <h3><i class="fas fa-users"></i> Referral Program</h3>
+                <span class="referral-badge">Earn 5% on every deposit!</span>
+            </div>
+            <div class="referral-stats">
+                <div class="ref-stat">
+                    <h4>Total Referrals</h4>
+                    <p>{{ total_referrals }}</p>
+                </div>
+                <div class="ref-stat">
+                    <h4>Total Earnings</h4>
+                    <p style="color: #28a745;">${{ referral_earnings|floatformat:2 }}</p>
+                </div>
+            </div>
+            <div class="referral-link-box">
+                <label>Your Unique Referral Link:</label>
+                <div class="link-container">
+                    <input type="text" value="{{ referral_link }}" readonly id="refLink">
+                    <button type="button" onclick="copyRefLink()" class="copy-btn">Copy Link</button>
+                </div>
+                <p id="refCopyMsg" style="color: #28a745; font-size: 0.85rem; display: none; margin-top: 5px;">✓ Link copied!</p>
+            </div>
+        </div>
+        
+        <!-- Investment History Table -->
+        <div class="dashboard-table-container">
+            <div class="table-header">
+                <h3>Investment & withdrawal History</h3>
+                div style="display: flex; gap: 10px;">
+                <a href="{% url 'investment_plans' %}" class="btn-orion" style="padding: 8px 20px; font-size: 0.9rem;">New Investment</a>
+                <a href="{% url 'request_withdrawal' %}" class="btn-orion" style="padding: 8px 20px; font-size: 0.9rem; background: #dc3545;">Request Withdrawal</a>
+            </div>
+
+            {% if investments %}
+            <div class="table-responsive">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Plan Name</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Expected Return</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inv in investments %}
+                        <tr>
+                            <td><strong>{{ inv.plan.name }}</strong></td>
+                            <td>{{ inv.plan.get_category_display }}</td>
+                            <td>${{ inv.amount|floatformat:2 }}</td>
+                            <td style="color: #28a745; font-weight: bold;">${{ inv.expected_return|floatformat:2 }}</td>
+                            <td>{{ inv.created_at|date:"M d, Y" }}</td>
+                            <td>
+                                {% if inv.status == 'active' %}
+                                    <span class="status-badge status-active">Active</span>
+                                {% elif inv.status == 'pending' %}
+                                    <span class="status-badge status-pending">Pending</span>
+                                {% elif inv.status == 'completed' %}
+                                    <span class="status-badge status-completed">Completed</span>
+                                {% else %}
+                                    <span class="status-badge status-cancelled">Cancelled</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-folder-open" style="font-size: 3rem; color: #ddd; margin-bottom: 1rem;"></i>
+                <p>You haven't made any investments yet.</p>
+                <a href="{% url 'investment_plans' %}" class="btn-orion" style="margin-top: 15px; display: inline-block;">View Plans</a>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+
+<script>
+    function copyRefLink() {
+        var copyText = document.getElementById("refLink");
+        copyText.select();
+        navigator.clipboard.writeText(copyText.value);
+        var msg = document.getElementById("refCopyMsg");
+        msg.style.display = "block";
+        setTimeout(function(){ msg.style.display = "none"; }, 2500);
+    }
+</script>
+{% endblock %}

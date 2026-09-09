@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}FAQ - Nexora Capital Groups{% endblock %}
+
+{% block content %}
+<section class="orion-hero">
+    <div class="container">
+        <h1 class="hero-title">Frequently Asked Questions</h1>
+        <p style="color: #cbd5e1; font-size: 1.2rem;">Everything you need to know about investing with Nexora.</p>
+    </div>
+</section>
+
+<section class="section-premium">
+    <div class="container" style="max-width: 800px;">
+        <div class="faq-container">
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>How do I start investing with Nexora?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Getting started is easy! Simply click the "Sign Up" button, create your free account, and verify your email. Once logged in, navigate to the "Investments" page, choose a plan that fits your goals, and follow the payment instructions.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>What payment methods do you accept?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We accept a variety of secure payment methods including Cryptocurrencies (Solana, Bitcoin, Ethereum) and Gift Cards (Amazon, Apple, Steam, etc.). All payments require a screenshot proof for verification.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>How long does it take for my investment to be approved?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our finance team manually verifies all transactions to ensure maximum security. Typically, investments are approved and activated within 1 to 24 hours after submission.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>When can I withdraw my profits?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You can request a withdrawal at any time once your investment is marked as "Active" or "Completed" in your dashboard. Withdrawals are processed by our admin team within 24-48 hours.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h4>Is my money safe with Nexora?</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely. We utilize bank-level encryption, cold storage for digital assets, and rigorous risk management protocols to ensure your funds are protected at all times.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script>
+    function toggleFaq(element) {
+        const faqItem = element.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Open the clicked item if it wasn't already active
+        if (!isActive) {
+            faqItem.classList.add('active');
+        }
+    }
+</script>
+{% endblock %}

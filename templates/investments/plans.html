@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Investment Plans - Nexora{% endblock %}
+
+{% block content %}
+<!-- Dark Hero Banner -->
+<section class="orion-hero">
+    <div class="container">
+        <h1 class="hero-title">PLAN</h1>
+    </div>
+</section>
+
+<!-- Investment Plans Section -->
+<section class="plans-section">
+    <div class="container">
+        
+        <!-- Loop through our custom ordered categories -->
+        {% for cat_key, cat_name in ordered_categories %}
+            
+            <h2 class="category-header">{{ cat_name }} PLANS</h2>
+            
+            <div class="plans-grid-orion">
+                {% for plan in plans %}
+                    {% if plan.category == cat_key %}
+                    <div class="orion-card">
+                        <h3 class="card-title">{{ plan.name }}</h3>
+                        
+                        <div class="card-roi">
+                            {{ plan.min_return }}% – {{ plan.max_return }}% Return
+                        </div>
+
+                        <ul class="card-details">
+                            <li>Minimum: ${{ plan.minimum_amount|floatformat:2 }}</li>
+                            <li>Maximum: ${{ plan.maximum_amount|floatformat:2 }}</li>
+                            <li>Profit Return: {{ plan.duration_days }} days</li>
+                            <li>24/7 Support</li>
+                        </ul>
+
+                        <a href="{% url 'invest_in_plan' plan.id %}" class="btn-orion">Invest Now</a>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+        {% endfor %}
+
+    </div>
+</section>
+{% endblock %}

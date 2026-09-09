@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Analytics - Nexora{% endblock %}
+
+{% block content %}
+<section class="orion-hero" style="height: 150px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+    <div class="container">
+        <h1 class="hero-title" style="font-size: 2.5rem;">Admin Analytics Dashboard</h1>
+        <p style="color: #cbd5e1;">Real-time overview of platform performance and pending actions.</p>
+    </div>
+</section>
+
+<section class="plans-section">
+    <div class="container">
+        
+        <!-- Main Statistics Grid -->
+        <div class="dashboard-stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #e0e7ff; color: #4338ca;"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <h3>Total Users</h3>
+                    <p>{{ total_users }}</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #dcfce7; color: #15803d;"><i class="fas fa-arrow-trend-up"></i></div>
+                <div class="stat-info">
+                    <h3>Total Invested</h3>
+                    <p>${{ total_invested|floatformat:2 }}</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #fee2e2; color: #b91c1c;"><i class="fas fa-money-bill-transfer"></i></div>
+                <div class="stat-info">
+                    <h3>Total Withdrawn</h3>
+                    <p>${{ total_withdrawn|floatformat:2 }}</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #fef3c7; color: #b45309;"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <h3>Pending Actions</h3>
+                    <p>{{ pending_investments }} Inv / {{ pending_withdrawals }} With</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity Section -->
+        <div class="admin-activity-grid">
+            
+            <!-- Recent Investments -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <h3><i class="fas fa-wallet"></i> Recent Investments</h3>
+                    <a href="/admin/investments/userinvestment/" class="view-all-link">View All</a>
+                </div>
+                {% if recent_investments %}
+                <ul class="activity-list">
+                    {% for inv in recent_investments %}
+                    <li class="activity-item">
+                        <div class="activity-icon" style="background: #e0e7ff; color: #4338ca;">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="activity-details">
+                            <strong>{{ inv.user.username }}</strong> invested in {{ inv.plan.name }}
+                            <span class="activity-meta">{{ inv.created_at|date:"M d, Y" }} • ${{ inv.amount|floatformat:2 }}</span>
+                        </div>
+                        <span class="status-badge status-{{ inv.status }}">{{ inv.status }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="empty-activity">No investments yet.</p>
+                {% endif %}
+            </div>
+
+            <!-- Recent Withdrawals -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <h3><i class="fas fa-hand-holding-usd"></i> Recent Withdrawals</h3>
+                    <a href="/admin/investments/withdrawalrequest/" class="view-all-link">View All</a>
+                </div>
+                {% if recent_withdrawals %}
+                <ul class="activity-list">
+                    {% for wd in recent_withdrawals %}
+                    <li class="activity-item">
+                        <div class="activity-icon" style="background: #fee2e2; color: #b91c1c;">
+                            <i class="fas fa-arrow-right-from-bracket"></i>
+                        </div>
+                        <div class="activity-details">
+                            <strong>{{ wd.user.username }}</strong> requested withdrawal
+                            <span class="activity-meta">{{ wd.created_at|date:"M d, Y" }} • ${{ wd.amount|floatformat:2 }}</span>
+                        </div>
+                        <span class="status-badge status-{{ wd.status }}">{{ wd.status }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="empty-activity">No withdrawal requests yet.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}
