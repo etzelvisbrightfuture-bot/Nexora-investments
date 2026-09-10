@@ -127,14 +127,12 @@ DEFAULT_FROM_EMAIL = "nexoragroups01@gmail.com" # Fixed typo here
 # PRODUCTION SETTINGS (Only runs on Render)
 # ==========================================
 if not DEBUG:
+    # Must be defined!
     ALLOWED_HOSTS = [
-        'nexoracapitalgroups.com',
-        'www.nexoracapitalgroups.com',
-         'nexora-capital-groups.onrender.com', # <-- ADD THIS EXACT LINE
-        '.onrender.com',
-        '.onrender.com',
         '127.0.0.1',
-        'localhost'
+        'localhost',
+        'nexora-capital-groups.onrender.com', # Added for Render
+        '.onrender.com' # Allows any Render subdomain
     ]
     
     # Use Render's PostgreSQL database
