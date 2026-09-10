@@ -95,8 +95,14 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# ADD THIS LINE HERE! (Move it up from the bottom of the file)
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
 
 # Media files (User uploads like gift cards)
 MEDIA_URL = '/media/'
@@ -136,7 +142,6 @@ if not DEBUG:
     )
     
     # Static files configuration for production (WhiteNoise)
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
     STORAGES = {
         "staticfiles": {
             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
