@@ -130,6 +130,8 @@ if not DEBUG:
     ALLOWED_HOSTS = [
         'nexoracapitalgroups.com',
         'www.nexoracapitalgroups.com',
+         'nexora-capital-groups.onrender.com', # <-- ADD THIS EXACT LINE
+        '.onrender.com',
         '.onrender.com',
         '127.0.0.1',
         'localhost'
