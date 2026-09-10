@@ -6,7 +6,7 @@ from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Load environment variables from .env file (for local development)
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,8 +18,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'your-local-dev-key-only-change-this-i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# Must be defined!
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+# CRITICAL: Allow Render domains globally to prevent DisallowedHost errors
+ALLOWED_HOSTS = [
+    '.onrender.com',  # Allows any Render subdomain (e.g., your-app.onrender.com)
+    'nexoracapitalgroups.com',
+    'www.nexoracapitalgroups.com',
+    '127.0.0.1',
+    'localhost'
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -30,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Your custom apps
     'core',
     'accounts',
     'investments',
@@ -40,7 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <-- ADDED: Crucial for static files in production!
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # WhiteNoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -68,17 +75,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'nexora_investments'),
-        'USER': os.getenv('DB_USER', 'nexora_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+# Database Configuration
+# Uses Render's DATABASE_URL if it exists, otherwise falls back to local .env variables
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME', 'nexora_investments'),
+            'USER': os.getenv('DB_USER', 'nexora_user'),
+            'PASSWORD': os.getenv('DB_PASSWORD', ''),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '5432'),
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -94,21 +110,28 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+# ==========================================
+# STATIC & MEDIA FILES (CRITICAL FOR RENDER)
+# ==========================================
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+# This MUST be here for 'collectstatic' to work during Render's build phase
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ADD THIS LINE HERE! (Move it up from the bottom of the file)
-STATIC_ROOT = BASE_DIR / 'staticfiles' 
+# WhiteNoise compression and caching
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
-# Media files (User uploads like gift cards)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Email Configuration (Django 6.1+ Format)
+# ==========================================
+# EMAIL CONFIGURATION
+# ==========================================
 MAILERS = {
     "default": {
         "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
@@ -116,39 +139,17 @@ MAILERS = {
             "host": "smtp.gmail.com",
             "port": 587,
             "use_tls": True,
-            "username": "nexoragroups01@gmail.com",
-            "password": "gdzrtygqrlhfavyd", # Ensure this is your correct 16-char App Password
+            "username": os.getenv('EMAIL_HOST_USER', 'nexoragroups01@gmail.com'),
+            "password": os.getenv('EMAIL_HOST_PASSWORD', 'your_16_char_app_password_here'),
         }
     }
 }
-DEFAULT_FROM_EMAIL = "nexoragroups01@gmail.com" # Fixed typo here
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'nexoragroups01@gmail.com')
 
 # ==========================================
-# PRODUCTION SETTINGS (Only runs on Render)
+# PRODUCTION SECURITY SETTINGS
 # ==========================================
 if not DEBUG:
-    # Must be defined!
-    ALLOWED_HOSTS = [
-        '127.0.0.1',
-        'localhost',
-        'nexora-capital-groups.onrender.com', # Added for Render
-        '.onrender.com' # Allows any Render subdomain
-    ]
-    
-    # Use Render's PostgreSQL database
-    DATABASES['default'] = dj_database_url.config(
-        conn_max_age=600,
-        default=os.environ.get('DATABASE_URL')
-    )
-    
-    # Static files configuration for production (WhiteNoise)
-    STORAGES = {
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-        },
-    }
-    
-    # Security settings for HTTPS
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
