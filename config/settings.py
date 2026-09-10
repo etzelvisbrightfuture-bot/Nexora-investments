@@ -140,7 +140,7 @@ MAILERS = {
             "port": 587,
             "use_tls": True,
             "username": os.getenv('EMAIL_HOST_USER', 'nexoragroups01@gmail.com'),
-            "password": os.getenv('EMAIL_HOST_PASSWORD', 'your_16_char_app_password_here'),
+            "password": os.getenv('EMAIL_HOST_PASSWORD', 'gdzrtygqrlhfavyd'),
         }
     }
 }
