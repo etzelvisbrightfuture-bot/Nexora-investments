@@ -39,7 +39,9 @@ def signup_view(request):
                     pass
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
-            verification_link = f"http://127.0.0.1:8000/accounts/verify/{uid}/{token}/"
+            verification_link = request.build_absolute_uri(
+                f'/accounts/verify/{uid}/{token}/'
+)
             subject = 'Verify Your Email - Nexora Investments'
             html_message = render_to_string('emails/verify_email.html', {
                 'user': user,
