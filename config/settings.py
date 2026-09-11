@@ -77,15 +77,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database Configuration
 # Uses Render's DATABASE_URL if it exists, otherwise falls back to local .env variables
-if os.environ.get('DATABASE_URL'):
+# Database Configuration
+# Uses Render's DATABASE_URL if it exists, otherwise falls back to local .env variables
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
             conn_max_age=600,
-            ssl_require=True
+            ssl_require='render.com' in DATABASE_URL
         )
     }
-else:
-    DATABASES = {
+else:    DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.getenv('DB_NAME', 'nexora_investments'),
