@@ -135,20 +135,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # ==========================================
 # EMAIL CONFIGURATION
 # ==========================================
-MAILERS = {
-    "default": {
-        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
-        "OPTIONS": {
-            "host": "smtp.gmail.com",
-            "port": 587,
-            "use_tls": True,
-            "username": os.getenv('EMAIL_HOST_USER'),
-            "password": os.getenv('EMAIL_HOST_PASSWORD'),
-        }
-    }
-}
+# ==========================================
+# EMAIL CONFIGURATION (PRODUCTION)
+# ==========================================
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'nexoragroups01@gmail.com')
-
 # ==========================================
 # PRODUCTION SECURITY SETTINGS
 # ==========================================
