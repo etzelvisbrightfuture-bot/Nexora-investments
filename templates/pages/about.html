@@ -1,51 +1,178 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About Us - Nexora Investments{% endblock %}
+{% block title %}About Us - Nexora Capital Group{% endblock %}
 
 {% block content %}
-<section class="orion-hero">
-    <div class="container">
-        <h1 class="hero-title">About Nexora</h1>
-        <p style="color: #cbd5e1; font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Pioneering the future of digital wealth management through technology, transparency, and trust.</p>
+<!-- Hero Section -->
+<section class="orion-hero" style="background: linear-gradient(135deg, #1e3a5f 0%, #0f2027 100%); padding: 100px 0; position: relative; overflow: hidden;">
+    <div class="container" style="position: relative; z-index: 2;">
+        <h1 class="hero-title" style="color: white; font-size: 3.5rem; margin-bottom: 20px; text-align: center;">ABOUT US</h1>
+        <p style="color: #cbd5e1; font-size: 1.3rem; text-align: center; max-width: 800px; margin: 0 auto;">Building Value Through Strategic Investment Excellence</p>
+    </div>
+    <div class="floating-shapes" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+        <div class="shape" style="position: absolute; width: 100px; height: 100px; border: 2px solid rgba(102, 126, 234, 0.3); border-radius: 50%; animation: float 20s infinite ease-in-out;"></div>
+        <div class="shape" style="position: absolute; top: 20%; right: 10%; width: 150px; height: 150px; border: 2px solid rgba(118, 75, 162, 0.3); border-radius: 50%; animation: float 25s infinite ease-in-out;"></div>
+        <div class="shape" style="position: absolute; bottom: 20%; left: 10%; width: 80px; height: 80px; border: 2px solid rgba(67, 56, 202, 0.3); border-radius: 50%; animation: float 22s infinite ease-in-out;"></div>
     </div>
 </section>
 
-<section class="section-premium">
+<!-- Navigation Dropdown Section -->
+<section style="background: #f8fafc; padding: 40px 0; border-bottom: 3px solid #667eea;">
     <div class="container">
-        <div class="section-header">
-            <h2>Our Mission & Vision</h2>
-            <p>Empowering individuals worldwide to achieve financial freedom.</p>
+        <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+            <a href="#who-we-are" style="color: #1e3a5f; text-decoration: none; font-weight: 600; font-size: 1.1rem; padding: 10px 20px; border: 2px solid #667eea; border-radius: 8px; transition: all 0.3s;">WHO WE ARE</a>
+            <a href="#our-approach" style="color: #1e3a5f; text-decoration: none; font-weight: 600; font-size: 1.1rem; padding: 10px 20px; border: 2px solid #667eea; border-radius: 8px; transition: all 0.3s;">OUR APPROACH</a>
+            <a href="#clients-service" style="color: #1e3a5f; text-decoration: none; font-weight: 600; font-size: 1.1rem; padding: 10px 20px; border: 2px solid #667eea; border-radius: 8px; transition: all 0.3s;">CLIENTS SERVICE</a>
         </div>
+    </div>
+</section>
+
+<!-- Our Approach Section -->
+<section id="our-approach" class="section-premium" style="padding: 80px 0;">
+    <div class="container" style="max-width: 1200px;">
+        <h2 style="color: #1e3a5f; font-size: 2.5rem; text-align: center; margin-bottom: 60px;">OUR APPROACH</h2>
         
-        <div class="features-grid-premium">
-            <div class="feature-card-premium">
-                <i class="fas fa-bullseye"></i>
-                <h3>Our Mission</h3>
-                <p>To provide accessible, secure, and high-yield investment opportunities to everyone, regardless of their geographical location or initial capital.</p>
+        <!-- Leveraging the Ecosystem -->
+        <div style="margin-bottom: 60px;">
+            <h3 style="color: #667eea; font-size: 1.8rem; margin-bottom: 20px;">Leveraging the Aserco Investment Ecosystem</h3>
+            <p style="color: #475569; font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px;">
+                We invest in asset classes that help form the backbone of the global economy. Our businesses across these asset classes create a global network that is the Nexora Capital Group Ecosystem. It provides us with insights about how the world is changing, and we use it in guiding our investment decisions, while adding value to our assets and businesses over the long term.
+            </p>
+        </div>
+
+        <!-- Four Pillars Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px;">
+            <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-top: 4px solid #667eea;">
+                <h4 style="color: #1e3a5f; font-size: 1.3rem; margin-bottom: 15px;">Gathering Operational Intelligence</h4>
+                <p style="color: #64748b; line-height: 1.7;">Our operations in strategic locations around the world provide us with data and insights into trends and changes in the market.</p>
             </div>
-            <div class="feature-card-premium">
-                <i class="fas fa-eye"></i>
-                <h3>Our Vision</h3>
-                <p>To become the world's most trusted digital investment platform, bridging the gap between traditional finance and the digital economy.</p>
+            
+            <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-top: 4px solid #764ba2;">
+                <h4 style="color: #1e3a5f; font-size: 1.3rem; margin-bottom: 15px;">Turning Insights into Action</h4>
+                <p style="color: #64748b; line-height: 1.7;">We leverage this intelligence to source, execute, manage and realize investments for the benefit of our clients and partners.</p>
             </div>
-            <div class="feature-card-premium">
-                <i class="fas fa-handshake"></i>
-                <h3>Our Values</h3>
-                <p>Integrity, transparency, and client success are at the core of every decision we make and every strategy we deploy.</p>
+            
+            <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-top: 4px solid #4338ca;">
+                <h4 style="color: #1e3a5f; font-size: 1.3rem; margin-bottom: 15px;">Connecting with Confidence</h4>
+                <p style="color: #64748b; line-height: 1.7;">The Aserco Investment Ecosystem drives competitive advantages in sourcing, executing, managing, and realizing investments.</p>
+            </div>
+            
+            <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-top: 4px solid #059669;">
+                <h4 style="color: #1e3a5f; font-size: 1.3rem; margin-bottom: 15px;">Creating and Compounding Value</h4>
+                <p style="color: #64748b; line-height: 1.7;">Our long-term investment success comes from buying, building and holding great businesses for long periods of time.</p>
+            </div>
+        </div>
+
+        <!-- Investment Philosophy -->
+        <div style="margin-bottom: 60px;">
+            <h3 style="color: #667eea; font-size: 1.8rem; margin-bottom: 30px;">Investment Philosophy</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+                <div style="padding: 30px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 10px; border-left: 4px solid #667eea;">
+                    <h5 style="color: #1e3a5f; margin-bottom: 10px; font-size: 1.1rem;">Focusing on Quality</h5>
+                    <p style="color: #64748b; font-size: 0.95rem;">We acquire high-quality assets and businesses that can provide strong downside protection across market cycles.</p>
+                </div>
+                
+                <div style="padding: 30px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 10px; border-left: 4px solid #764ba2;">
+                    <h5 style="color: #1e3a5f; margin-bottom: 10px; font-size: 1.1rem;">Being Patient and Ready</h5>
+                    <p style="color: #64748b; font-size: 0.95rem;">We take a long-term view in deploying capital while acting decisively when the right opportunities emerge.</p>
+                </div>
+                
+                <div style="padding: 30px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 10px; border-left: 4px solid #4338ca;">
+                    <h5 style="color: #1e3a5f; margin-bottom: 10px; font-size: 1.1rem;">Taking a Contrarian View</h5>
+                    <p style="color: #64748b; font-size: 0.95rem;">We see opportunities in assets, businesses, markets and sectors that are out of favor or in distress.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sustainability Section -->
+        <div style="margin-bottom: 60px;">
+            <h3 style="color: #667eea; font-size: 1.8rem; margin-bottom: 30px;">Sustainability at Our Core</h3>
+            <p style="color: #475569; font-size: 1.1rem; line-height: 1.8; margin-bottom: 40px;">
+                We are more than simply an investor we are active participants in industries and economies around the world. And we are committed to sustainability in everything we do.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+                <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <h5 style="color: #059669; font-size: 1.2rem; margin-bottom: 15px;">Operational</h5>
+                    <p style="color: #64748b; line-height: 1.7; font-size: 0.95rem;">We understand a company's potential and help enable it to sustain itself over the long term. We have successfully operated assets and businesses through multiple market cycles, building exceptional in-house knowledge, relationships and execution capabilities across sectors and regions.</p>
+                </div>
+                
+                <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <h5 style="color: #059669; font-size: 1.2rem; margin-bottom: 15px;">Financial</h5>
+                    <p style="color: #64748b; line-height: 1.7; font-size: 0.95rem;">We implement responsible capital and governance structures that support businesses for the long term. The concept starts with Aserco Investment and extends to our businesses and assets, and to our partnerships with investors.</p>
+                </div>
+                
+                <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <h5 style="color: #059669; font-size: 1.2rem; margin-bottom: 15px;">Environmental</h5>
+                    <p style="color: #64748b; line-height: 1.7; font-size: 0.95rem;">We are committed to managing our investments to be consistent with the transition to a net-zero economy by 2050. And throughout our operations, we strive to minimize our environmental impact and improve our efficient use of resources over time.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mission Statement -->
+        <div style="background: linear-gradient(135deg, #1e3a5f 0%, #0f2027 100%); padding: 60px 40px; border-radius: 16px; text-align: center;">
+            <p style="color: white; font-size: 1.4rem; font-style: italic; line-height: 1.8; max-width: 900px; margin: 0 auto;">
+                We strive to create value for our clients and employees while adhering to principles of excellence and trust
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Who We Are Section -->
+<section id="who-we-are" style="background: #f8fafc; padding: 80px 0;">
+    <div class="container" style="max-width: 1000px;">
+        <h2 style="color: #1e3a5f; font-size: 2.5rem; text-align: center; margin-bottom: 40px;">WHO WE ARE</h2>
+        <div style="background: white; padding: 50px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);">
+            <p style="color: #475569; font-size: 1.15rem; line-height: 1.9; text-align: center;">
+                Nexora Capital Group is a leading global investment firm that leverages the power of the Aserco Investment Ecosystem to deliver exceptional returns for our clients. With operations spanning strategic locations worldwide, we combine operational intelligence with financial expertise to identify and capitalize on unique investment opportunities across multiple asset classes.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Clients Service Section -->
+<section id="clients-service" class="section-premium" style="padding: 80px 0;">
+    <div class="container" style="max-width: 1000px;">
+        <h2 style="color: #1e3a5f; font-size: 2.5rem; text-align: center; margin-bottom: 40px;">CLIENTS SERVICE</h2>
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 60px 50px; border-radius: 16px; color: white; text-align: center;">
+            <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 30px;">
+                At Nexora Capital Group, we are committed to providing unparalleled service to our clients. Our dedicated team works tirelessly to ensure that your investment goals are met with professionalism, transparency, and excellence.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;"></div>
+                    <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Personalized Solutions</h4>
+                    <p style="font-size: 0.95rem; opacity: 0.9;">Tailored investment strategies</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🔒</div>
+                    <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Secure & Transparent</h4>
+                    <p style="font-size: 0.95rem; opacity: 0.9;">Bank-level security</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">💼</div>
+                    <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Expert Support</h4>
+                    <p style="font-size: 0.95rem; opacity: 0.9;">24/7 dedicated assistance</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="section-premium bg-dark">
-    <div class="container">
-        <div class="section-header">
-            <h2>Why Trust Nexora?</h2>
-        </div>
-        <div style="max-width: 800px; margin: 0 auto; color: #475569; line-height: 1.8; font-size: 1.1rem; text-align: center;">
-            <p>At Nexora Investments, we combine cutting-edge algorithmic trading strategies with rigorous risk management protocols. Our team of expert financial analysts and blockchain engineers work around the clock to ensure your portfolio grows consistently while remaining protected against market volatility.</p>
-            <p style="margin-top: 20px;">We are fully committed to regulatory compliance and operate with complete transparency, ensuring that your funds are handled with the utmost professionalism.</p>
+<!-- Contact Section -->
+<section style="background: #f8fafc; padding: 80px 0;">
+    <div class="container" style="max-width: 800px;">
+        <h2 style="color: #1e3a5f; font-size: 2.5rem; text-align: center; margin-bottom: 50px;">GET IN TOUCH</h2>
+        <div style="background: white; padding: 50px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.08);">
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #667eea; margin-bottom: 15px; font-size: 1.2rem;">📍 Location</h4>
+                <p style="color: #475569; font-size: 1.05rem;">One Address</p>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #667eea; margin-bottom: 15px; font-size: 1.2rem;">📧 Email</h4>
+                <p style="color: #475569; font-size: 1.05rem;">nexoragroups01@gmail.com</p>
+            </div>
         </div>
     </div>
 </section>
