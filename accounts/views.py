@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from investments.models import UserInvestment, WithdrawalRequest, UserProfile
 from .forms import CustomUserCreationForm
+from django.db import transaction
 
 
 class UserUpdateForm(forms.ModelForm):

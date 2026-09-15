@@ -87,7 +87,8 @@ if DATABASE_URL:
             ssl_require='render.com' in DATABASE_URL
         )
     }
-else:    DATABASES = {
+else:    
+    DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.getenv('DB_NAME', 'nexora_investments'),
