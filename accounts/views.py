@@ -48,7 +48,7 @@ def signup_view(request):
                 'user': user,
                 'verification_link': verification_link
             })
-            send_mail(subject, '', settings.DEFAULT_FROM_EMAIL, [user.email], html_message=html_message)
+            # send_mail(subject, '', settings.DEFAULT_FROM_EMAIL, [user.email], html_message=html_message)
             messages.success(request, 'Account created! Please check your email to verify your account.')
             return redirect('login')
     else:
