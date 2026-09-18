@@ -13,36 +13,80 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
+        <!-- Navigation -->
+    <nav class="navbar" style="background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000;">
+        <div class="nav-container" style="max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
             <div class="nav-brand">
                 <a href="{% url 'home' %}">
-                    <img src="{% static 'images/logo.png' %}" alt="Nexora Capital Groups" class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Nexora Capital Groups" class="logo" style="height: 50px; width: auto;">
                 </a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="{% url 'investment_plans' %}">Investments</a></li>
-                <li><a href="{% url 'faq' %}">FAQ</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
+            
+            <!-- Mobile Menu Toggle Button -->
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" style="display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #1e3a5f;">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Desktop Menu -->
+            <ul class="nav-menu" id="navMenu" style="display: flex; list-style: none; margin: 0; padding: 0; gap: 30px; align-items: center;">
+                <li><a href="{% url 'home' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; transition: color 0.3s;">Home</a></li>
+                <li><a href="{% url 'about' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; transition: color 0.3s;">About</a></li>
+                <li><a href="{% url 'investment_plans' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; transition: color 0.3s;">Investments</a></li>
+                <li><a href="{% url 'faq' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; transition: color 0.3s;">FAQ</a></li>
+                <li><a href="{% url 'contact' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; transition: color 0.3s;">Contact</a></li>
                 
                 {% if user.is_authenticated %}
-    {% if user.is_staff %}
-        <li><a href="{% url 'admin_dashboard' %}" style="color: #f59e0b; font-weight: 700;">Admin Panel</a></li>
-    {% endif %}
-    <li><a href="{% url 'profile' %}">Profile</a></li>
-    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% if user.is_staff %}
+                        <li><a href="{% url 'admin_dashboard' %}" style="color: #f59e0b; font-weight: 700;">Admin</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'dashboard' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500;">Dashboard</a></li>
+                    <li><a href="{% url 'logout' %}" style="color: #ef4444; text-decoration: none; font-weight: 500;">Logout</a></li>
                 {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    <li><a href="{% url 'signup' %}" class="btn-primary">Sign Up</a></li>
+                    <li><a href="{% url 'login' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500;">Login</a></li>
+                    <li><a href="{% url 'signup' %}" style="background: #3b82f6; color: white; padding: 10px 25px; text-decoration: none; border-radius: 8px; font-weight: 600; transition: background 0.3s;">Sign Up</a></li>
                 {% endif %}
             </ul>
         </div>
     </nav>
 
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="mobile-menu" style="display: none; position: fixed; top: 80px; left: 0; right: 0; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 999; padding: 20px;">
+        <ul style="list-style: none; margin: 0; padding: 0;">
+            <li style="margin-bottom: 15px;"><a href="{% url 'home' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; font-size: 1.1rem; display: block; padding: 10px;">Home</a></li>
+            <li style="margin-bottom: 15px;"><a href="{% url 'about' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; font-size: 1.1rem; display: block; padding: 10px;">About</a></li>
+            <li style="margin-bottom: 15px;"><a href="{% url 'investment_plans' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; font-size: 1.1rem; display: block; padding: 10px;">Investments</a></li>
+            <li style="margin-bottom: 15px;"><a href="{% url 'faq' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; font-size: 1.1rem; display: block; padding: 10px;">FAQ</a></li>
+            <li style="margin-bottom: 15px;"><a href="{% url 'contact' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; font-size: 1.1rem; display: block; padding: 10px;">Contact</a></li>
+            {% if user.is_authenticated %}
+                <li style="margin-bottom: 15px;"><a href="{% url 'dashboard' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; font-size: 1.1rem; display: block; padding: 10px;">Dashboard</a></li>
+                <li style="margin-bottom: 15px;"><a href="{% url 'logout' %}" style="color: #ef4444; text-decoration: none; font-weight: 500; font-size: 1.1rem; display: block; padding: 10px;">Logout</a></li>
+            {% else %}
+                <li style="margin-bottom: 15px;"><a href="{% url 'login' %}" style="color: #1e3a5f; text-decoration: none; font-weight: 500; font-size: 1.1rem; display: block; padding: 10px;">Login</a></li>
+                <li><a href="{% url 'signup' %}" style="background: #3b82f6; color: white; padding: 12px; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center; display: block;">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu.style.display === 'none' || mobileMenu.style.display === '') {
+                mobileMenu.style.display = 'block';
+            } else {
+                mobileMenu.style.display = 'none';
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const toggleButton = document.querySelector('.mobile-menu-toggle');
+            if (!toggleButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                mobileMenu.style.display = 'none';
+            }
+        });
+    </script>
+    
         <!-- Django Messages (Alerts) -->
     {% if messages %}
     <div class="container" style="margin-top: 100px;">
