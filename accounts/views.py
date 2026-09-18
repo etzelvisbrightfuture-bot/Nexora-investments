@@ -107,7 +107,7 @@ def dashboard_view(request):
     total_invested = sum(inv.amount for inv in active_investments) + sum(inv.amount for inv in completed_investments)
     withdrawable_balance = sum(inv.expected_return for inv in active_investments) + sum(inv.expected_return for inv in completed_investments)
     profile, created = UserProfile.objects.get_or_create(user=request.user)
-    referral_link = f"http://127.0.0.1:8000/accounts/signup/?ref={request.user.id}"
+    referral_link = f"http://nexoracapitalgroups.com/accounts/signup/?ref={request.user.id}"
     total_referrals = request.user.referred_users.count()
     context = {
         'investments': investments,

@@ -8,7 +8,7 @@ from django.conf import settings
 
 def test_email_view(request):
     # REPLACE THIS WITH YOUR ACTUAL EMAIL ADDRESS
-    recipient_email = "etzelvisbrightfuture@gmail.com" 
+    recipient_email = "nexoragroups01@gmail.com" 
     
     try:
         send_mail(
