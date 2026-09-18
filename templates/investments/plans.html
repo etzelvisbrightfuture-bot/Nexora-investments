@@ -5,39 +5,38 @@
 
 {% block content %}
 <!-- Dark Hero Banner -->
-<section class="orion-hero">
+<section class="plans-hero" style="background: linear-gradient(rgba(15, 32, 39, 0.85), rgba(15, 32, 39, 0.85)), url('{% static 'images/hero-bg.jpg' %}'); background-size: cover; background-position: center; padding: 100px 0; text-align: center;">
     <div class="container">
-        <h1 class="hero-title">PLAN</h1>
+        <h1 class="hero-title" style="color: white; font-size: 3.5rem; font-weight: 700; margin: 0; text-transform: uppercase; letter-spacing: 2px;">PLAN</h1>
     </div>
 </section>
 
 <!-- Investment Plans Section -->
-<section class="plans-section">
+<section class="plans-section" style="padding: 80px 0; background: #f8f9fa;">
     <div class="container">
         
-        <!-- Loop through our custom ordered categories -->
         {% for cat_key, cat_name in ordered_categories %}
             
-            <h2 class="category-header">{{ cat_name }} PLANS</h2>
+            <h2 class="category-header" style="text-align: center; font-size: 2.5rem; color: #1e3a5f; margin-bottom: 50px; text-transform: uppercase; font-weight: 600;">{{ cat_name }}</h2>
             
-            <div class="plans-grid-orion">
+            <div class="plans-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto;">
                 {% for plan in plans %}
                     {% if plan.category == cat_key %}
-                    <div class="orion-card">
-                        <h3 class="card-title">{{ plan.name }}</h3>
+                    <div class="plan-card" style="background: white; padding: 40px 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; transition: transform 0.3s ease;">
+                        <h3 class="plan-name" style="color: #1e3a5f; font-size: 1.8rem; margin-bottom: 20px; text-transform: uppercase; font-weight: 600;">{{ plan.name }}</h3>
                         
-                        <div class="card-roi">
+                        <div class="plan-return" style="color: #059669; font-size: 2rem; font-weight: 700; margin-bottom: 25px;">
                             {{ plan.min_return }}% – {{ plan.max_return }}% Return
                         </div>
 
-                        <ul class="card-details">
+                        <ul class="plan-details" style="list-style: none; padding: 0; margin: 0 0 30px 0; color: #64748b; font-size: 0.95rem; line-height: 2;">
                             <li>Minimum: ${{ plan.minimum_amount|floatformat:2 }}</li>
                             <li>Maximum: ${{ plan.maximum_amount|floatformat:2 }}</li>
-                            <li>Profit Return: {{ plan.duration_days }} days</li>
+                            <li>Investment Term: {{ plan.duration_days }} days</li>
                             <li>24/7 Support</li>
                         </ul>
 
-                        <a href="{% url 'invest_in_plan' plan.id %}" class="btn-orion">Invest Now</a>
+                        <a href="{% url 'invest_in_plan' plan.id %}" class="btn-invest" style="display: inline-block; padding: 14px 40px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 1rem; transition: background 0.3s ease;">Invest Now</a>
                     </div>
                     {% endif %}
                 {% endfor %}
@@ -47,4 +46,9 @@
 
     </div>
 </section>
+
+<style>
+    .plan-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+    .btn-invest:hover { background: #5568d3; }
+</style>
 {% endblock %}
