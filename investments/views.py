@@ -63,24 +63,24 @@ def invest_in_plan(request, plan_id):
         )
         
         # 2. Send Immediate Confirmation Email
-        if request.user.email:
-            from django.core.mail import send_mail
-            from django.conf import settings
-            from django.template.loader import render_to_string
+        # if request.user.email:
+        #     from django.core.mail import send_mail
+        #     from django.conf import settings
+        #     from django.template.loader import render_to_string
             
-            subject = 'Investment Received: Pending Verification'
-            html_message = render_to_string('emails/investment_pending.html', {
-                'user': request.user,
-                'plan': plan,
-                'amount': amount
-            })
-            send_mail(
-                subject, 
-                '', 
-                settings.DEFAULT_FROM_EMAIL, 
-                [request.user.email], 
-                html_message=html_message
-            )
+        #     subject = 'Investment Received: Pending Verification'
+        #     html_message = render_to_string('emails/investment_pending.html', {
+        #         'user': request.user,
+        #         'plan': plan,
+        #         'amount': amount
+        #     })
+        #     send_mail(
+        #         subject, 
+        #         '', 
+        #         settings.DEFAULT_FROM_EMAIL, 
+        #         [request.user.email], 
+        #         html_message=html_message
+        #     )
         
         messages.success(request, 'Investment submitted successfully! Check your email for confirmation. Admin will verify your payment shortly.')
         return redirect('dashboard')
