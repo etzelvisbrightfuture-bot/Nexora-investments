@@ -118,20 +118,20 @@ USE_TZ = True
 # ==========================================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# This MUST be here for 'collectstatic' to work during Render's build phase
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# WhiteNoise compression and caching
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# WhiteNoise compression and caching + Default File Storage
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage", # <-- THIS FIXES THE UPLOAD ERROR
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 # ==========================================
 # EMAIL CONFIGURATION
 # ==========================================
