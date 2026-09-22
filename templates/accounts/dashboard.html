@@ -83,11 +83,13 @@
         <div class="dashboard-table-container">
             <div class="table-header">
                 <h3>Investment & withdrawal History</h3>
-                div style="display: flex; gap: 10px;">
-                <a href="{% url 'investment_plans' %}" class="btn-orion" style="padding: 8px 20px; font-size: 0.9rem;">New Investment</a>
-                <a href="{% url 'request_withdrawal' %}" class="btn-orion" style="padding: 8px 20px; font-size: 0.9rem; background: #dc3545;">Request Withdrawal</a>
-            </div>
-
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+    <h2 style="color: #1e3a5f; font-size: 1.8rem; margin: 0;">Investment & Withdrawal History</h2>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="{% url 'investment_plans' %}" style="display: inline-block; padding: 12px 30px; background: #059669; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: background 0.3s;">NEW INVESTMENT</a>
+        <a href="{% url 'request_withdrawal' %}" style="display: inline-block; padding: 12px 30px; background: #ef4444; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: background 0.3s;">REQUEST WITHDRAWAL</a>
+    </div>
+</div>
             {% if investments %}
             <div class="table-responsive">
                 <table class="dashboard-table">
