@@ -23,17 +23,17 @@ class UserInvestmentAdmin(admin.ModelAdmin):
         # If status changed to 'active', send email AND award referral bonus
         if change and old_obj and old_obj.status != 'active' and obj.status == 'active':
             
-            # 1. Send Approval Email
-            if obj.user.email:
-                subject = 'Your Investment has been Approved!'
-                html_message = render_to_string('emails/investment_approved.html', {
-                    'user': obj.user, 
-                    'plan': obj.plan, 
-                    'amount': obj.amount
-                })
-                send_mail(subject, '', settings.DEFAULT_FROM_EMAIL, [obj.user.email], html_message=html_message)
+            # 1. Send Approval Email (TEMPORARILY DISABLED TO PREVENT RENDER TIMEOUT)
+            # if obj.user.email:
+            #     subject = 'Your Investment has been Approved!'
+            #     html_message = render_to_string('emails/investment_approved.html', {
+            #         'user': obj.user, 
+            #         'plan': obj.plan, 
+            #         'amount': obj.amount
+            #     })
+            #     send_mail(subject, '', settings.DEFAULT_FROM_EMAIL, [obj.user.email], html_message=html_message)
 
-            # 2. Award 5% Referral Bonus
+            # 2. Award 5% Referral Bonus (THIS STILL WORKS PERFECTLY!)
             try:
                 profile = obj.user.profile
                 if profile.referred_by:
@@ -54,13 +54,13 @@ class WithdrawalRequestAdmin(admin.ModelAdmin):
         old_obj = WithdrawalRequest.objects.get(pk=obj.pk) if change else None
         super().save_model(request, obj, form, change)
         
-        # If status changed to 'approved' or 'rejected', send email
-        if change and old_obj and old_obj.status != obj.status and obj.status in ['approved', 'rejected']:
-            if obj.user.email:
-                subject = f'Withdrawal Request {obj.status.title()}'
-                html_message = render_to_string('emails/withdrawal_processed.html', {
-                    'user': obj.user, 
-                    'amount': obj.amount,
-                    'status': obj.status
-                })
-                send_mail(subject, '', settings.DEFAULT_FROM_EMAIL, [obj.user.email], html_message=html_message)
+        # If status changed to 'approved' or 'rejected', send email (TEMPORARILY DISABLED)
+        # if change and old_obj and old_obj.status != obj.status and obj.status in ['approved', 'rejected']:
+        #     if obj.user.email:
+        #         subject = f'Withdrawal Request {obj.status.title()}'
+        #         html_message = render_to_string('emails/withdrawal_processed.html', {
+        #             'user': obj.user, 
+        #             'amount': obj.amount,
+        #             'status': obj.status
+        #         })
+        #         send_mail(subject, '', settings.DEFAULT_FROM_EMAIL, [obj.user.email], html_message=html_message)
