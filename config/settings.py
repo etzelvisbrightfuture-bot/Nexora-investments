@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'payments',
     'dashboard',
     'pages',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -156,3 +158,19 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+    
+# ==========================================
+# CLOUDINARY CONFIGURATION
+# ==========================================
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name="YOUR_CLOUD_NAME",  # Replace with your Cloud Name
+    api_key="YOUR_API_KEY",         # Replace with your API Key
+    api_secret="YOUR_API_SECRET"    # Replace with your API Secret
+)
+
+# Use Cloudinary for file uploads
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

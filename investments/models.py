@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from decimal import Decimal
+from cloudinary.models import CloudinaryField  # <--- ADDED THIS IMPORT
 
 class InvestmentPlan(models.Model):
     CATEGORY_CHOICES = [
@@ -44,7 +45,8 @@ class UserInvestment(models.Model):
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS, default='solana')
     
-    payment_proof = models.ImageField(upload_to='payment_proofs/', blank=True, null=True, help_text="Screenshot of crypto transfer or gift card image")
+    # <--- CHANGED THIS LINE TO USE CLOUDINARY
+    payment_proof = CloudinaryField('image', blank=True, null=True, help_text="Screenshot of crypto transfer or gift card image")
     
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()
@@ -69,7 +71,6 @@ class UserInvestment(models.Model):
             self.end_date = timezone.now() + timezone.timedelta(days=self.plan.duration_days)
         
         if not self.expected_return:
-            # Safely convert to Decimal to prevent float * Decimal TypeError
             amt = Decimal(str(self.amount))
             ret = Decimal(str(self.plan.min_return))
             self.expected_return = amt + (amt * ret / Decimal('100'))
@@ -98,45 +99,6 @@ class WithdrawalRequest(models.Model):
     class Meta:
         ordering = ['-created_at']
         
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.shortcuts import redirect, render
-from django.utils import timezone
-from decimal import Decimal
-
-@login_required
-def request_withdrawal(request):
-    if request.method == 'POST':
-        amount_str = request.POST.get('amount')
-        method = request.POST.get('payment_method')
-        address = request.POST.get('wallet_address')
-        
-        if not amount_str or not method or not address:
-            messages.error(request, 'Please fill in all fields.')
-            return render(request, 'investments/withdraw.html')
-        
-        amount = Decimal(amount_str)
-        
-        if amount <= 0:
-            messages.error(request, 'Withdrawal amount must be greater than zero.')
-            return render(request, 'investments/withdraw.html')
-
-        # Optional: You can add logic here to check if they have enough 'active' or 'completed' balance
-        # For now, we will allow the request and let the admin verify their balance.
-
-        WithdrawalRequest.objects.create(
-            user=request.user,
-            amount=amount,
-            payment_method=method,
-            wallet_address=address,
-            status='pending'
-        )
-        
-        messages.success(request, 'Withdrawal request submitted successfully! Admin will process it shortly.')
-        return redirect('dashboard')
-    
-    return render(request, 'investments/withdraw.html')
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     referred_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='referred_users')
@@ -144,7 +106,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
-    
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
